@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  valheim:
+    image: valheim-server
+    container_name: valheim-server
+    restart: unless-stopped
+    ports:
+      - "2456-2458:2456-2458/udp"
+    volumes:
+      - ./config:/home/steam/.config/unity3d/IronGate/Valheim
+      - ./backups:/backups
+      - ./scripts:/scripts
+    environment:
+      - SERVER_NAME=MyValheimServer
+      - WORLD_NAME=ValheimWorld
+      - SERVER_PASS=asdfa
+      - SERVER_PUBLIC=false
+      - MODIFIERS=CombatHard,DeathPenaltyNormal,ResourceRate2,RaidLessFrequent,PortalItems
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - seccomp=unconfined
